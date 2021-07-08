@@ -1,0 +1,12 @@
+ESDWSN platform.
+
+The platform consists of Arduino Uno nodes and an Arduino Due Controller, directly connected to nRF24l01 transceivers. In the prototype, the nodes were connected via USB interface directly to a PC to collect operating data.
+
+Figure sensor.png and controller.png show, respectively, the connection diagram of the Nodes and the Controller.
+Figure prototype.png shows how the nodes were arranged in the prototype under test.
+
+In each of the nodes its network address must be recorded in its Eeprom. A sketch (saveEEPROM) was created to record this information. Node port 10 must be in gnd for writing to take place. The serial interface will be used as an interface to determine the address to be written. With port 10 in Vdc or open, the serial interface only presents the address previously recorded in the node.
+
+After recording the network address of the nodes, you must load the sketch "sensor" in each of the nodes and the sketch "controller" in the controller. Due to clock synchronism limitation, which is foreseen for new versions of the project, the nodes must be connected quickly in sequence and when the last one turns on, the controller can be activated.
+
+Tested nRF24l01 transceivers had power sypply problems. 100uf25v electrolytic capacitors were soldered between the VCC and GND terminals for power supply stability. Without the capacitors the transceivers could not transmit even at short distances.

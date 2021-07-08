@@ -1,0 +1,11 @@
+
+A plataforma é formada por Nós Arduinos Uno e um Controlador Arduino Due, ligados diretamente a transceivers nRF24l01. No protótipo os nós foram ligados via interface USB diretamente a um PC para coleta dos dados de funcionamento.
+
+A Figura sensor.png e controller.png apresentam, respectivamente, o esquema de ligação dos Nós e do Controlador. Os
+A Figura prototype.png apresenta como os nós foram dispostos no protótipo em teste.
+
+Em cada um dos nós deve ser gravado em sua Eeprom o seu endereço de rede. Um sketch (saveEEPROM) foi criado para gravação desta informação. A porta 10 do nó deve estar em gnd para que a gravação seja realizada. A interface serial será usada como interface para determinar o endereço a ser gravado. Com a porta 10 em Vcc ou aberta, a interface serial apenas apresenta o endereço previamente gravado no nó.
+
+Após gravado o endereço de rede dos nós, deve-se carregar o sketch "sensor" em cada um dos nós e o sketch "controller" no controlador. Devido a limitação de sincronismo de relógio, que está previsto para novas versões do projeto, os nós devem ser ligados rapidamente em sequência e quando o último ligar, o controlador pode ser ativado.
+
+Os transceivers nRF24l01 testados apresentaram problemas de alimentação. Foram soldados capacitores eletrolíticos de 100uf25v entre os terminais VCC e GND, para estabilidade da alimentação. Sem os capacitores os transceivers não conseguiam transmitir mesmo a curta distância.
