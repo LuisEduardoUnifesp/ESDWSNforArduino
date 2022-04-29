@@ -1,0 +1,70 @@
+//********************************************************************************
+//*  Copyright: National ICT Australia,  2007 - 2010                             *
+//*  Developed at the ATP lab, Networked Systems research theme                  *
+//*  Author(s): Athanassios Boulis, Dimosthenis Pediaditakis, Yuriy Tselishchev  *
+//*  This file is distributed under the terms in the attached LICENSE file.      *
+//*  If you do not find this file, copies can be found by writing to:            *
+//*                                                                              *
+//*      NICTA, Locked Bag 9013, Alexandria, NSW 1435, Australia                 *
+//*      Attention:  License Inquiry.                                            *
+//*                                                                              *  
+//*******************************************************************************/
+
+package node.communication.routing.WSDFN;
+
+simple WSDFN like node.communication.routing.iRouting
+//====================================================================================
+// Network_GenericFrame has the following real-world
+// (non-simulation-specific) fields:
+//    unsigned short int frameType; --> 2bytes
+//    string source;  ----------------> 2bytes
+//    string destinationCtrl; --------> 2bytes
+//    string lastHop; ------------> 2bytes
+//    string nextHop; ------------> 2bytes
+//    unsigned short int ttl; ----> 2bytes
+//    string applicationID; ------> 2bytes
+// Total bytes = 7*2 = 14 (|*|)
+// From these 14bytes, BypassRoutingModule doesn't use everything.
+// It doesn't use the ttl and applicationID fields.
+// Concluding the calculations, the Network_GenericFrame for
+// BypassRoutingModule has a total overhead of:
+// 14-(2+2) = 10 bytes
+//====================================================================================
+{
+ parameters:
+	bool collectTraceInfo = default (false);
+	int maxNetFrameSize = default (0);	// bytes
+	int netDataFrameOverhead = default (10);	// bytes
+	int netBufferSize = default (32);	// number of messages
+	bool isController= default(false);			// Select 'true' to run as a Controller on the node
+	bool isSink= default(false); // Select 'true' to run as a Sink on the node
+	int sinkAddress= default(0); // addess of sink
+	double lowRssi = default (-98.0);   //rssi cut (in Dbm)
+
+	double reportTime = default (86400);   //time between reports from nodes (in seconds)
+	double reportDuration = default (2.5); // duration of report phase (in seconds)
+	double reportFirstTime = default (0.5); //time for first report phase (in seconds)
+	int reportInterval = default (3000); //interval in reporting nodes for avoid hidden terminal (in miliseconds)
+	double reportVerify = default (0.07); //time for verify the report confirmation (in seconds)
+	double programmingTime = default (86400.0); //time between programming phases (in seconds)
+	double programmingDuration = default (10); // duration of programming phase (in seconds)
+	double programmingFirstTime = default (6.0); //time for first programming phases (in seconds)
+	double programmingInterval = default (0.3); //interval in programming nodes for avoid hidden terminal (in seconds)
+	int numNodes = default (4); //number of nodes
+	int spaceDelay = default (300); //time space between sensors send data (in miliseconds)
+	int npackages = default (1); //number of packages for each transmission 
+
+	double discoveryTime = default (0.05); //time for Controller Discovery phases
+	double delayController = default (0.05); //time for delay between Controller and nodes
+	double discoveryDuration = default (0.2); // duration of Controller Discovery phase (in seconds)
+	double dataTime = default(2.0); // duration of report data sensors (in seconds)
+
+
+ gates:
+	output toCommunicationModule;
+	output toMacModule;
+	input fromCommunicationModule;
+	input fromMacModule;
+	input fromCommModuleResourceMgr;
+}
+
