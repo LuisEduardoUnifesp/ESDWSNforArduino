@@ -10,3 +10,5 @@ In each of the nodes its network address must be recorded in its Eeprom. A sketc
 After recording the network address of the nodes, you must load the sketch "sensor" in each of the nodes and the sketch "controller" in the controller. Due to clock synchronism limitation, which is foreseen for new versions of the project, the nodes must be connected quickly in sequence and when the last one turns on, the controller can be activated.
 
 Tested nRF24l01 transceivers had power sypply problems. 100uf25v electrolytic capacitors were soldered between the VCC and GND terminals for power supply stability. Without the capacitors the transceivers could not transmit even at short distances.
+
+For citations use: http://dx.doi.org/10.1109/TLA.2021.9827468
